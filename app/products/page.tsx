@@ -1,18 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import DeleteButton from "../components/DeleteButton";
+import { products } from "../api/products/data";
 
-async function getProducts() {
-  const res = await fetch("http://localhost:3000/api/products", {
-    cache: "no-store",
-  });
-
-  return res.json();
-}
-
-export default async function ProductsPage() {
-  const products = await getProducts();
-
+export default function ProductsPage() {
   return (
     <main className="min-h-screen bg-[#F5F7FA] py-10 px-6">
       <div className="max-w-7xl mx-auto">
@@ -24,7 +15,7 @@ export default async function ProductsPage() {
 
           <Link
             href="/products/add"
-            className="bg-[#0F3040] hover:bg-[#60241E] transition-all duration-300 text-white px-6 py-3 rounded-xl font-bold shadow-lg"
+            className="bg-[#0F3040] hover:bg-[#60241E] transition-all duration-300 text-white px-6 py-3 rounded-xl font-bold shadow-lg cursor-pointer"
           >
             + Add Product
           </Link>
@@ -32,7 +23,7 @@ export default async function ProductsPage() {
 
         {/* Products */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product: any) => (
+          {products.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300"
@@ -50,7 +41,6 @@ export default async function ProductsPage() {
 
               {/* Content */}
               <div className="p-6">
-
                 <h2 className="text-3xl font-extrabold text-[#0F3040]">
                   {product.title}
                 </h2>
@@ -60,23 +50,21 @@ export default async function ProductsPage() {
                 </p>
 
                 <div className="flex justify-between mt-7">
-
                   <Link
                     href={`/products/${product.id}`}
-                    className="bg-[#063B00] hover:opacity-90 text-white px-6 py-2 rounded-lg font-semibold"
+                    className="bg-[#063B00] hover:opacity-90 text-white px-6 py-2 rounded-lg font-semibold cursor-pointer"
                   >
                     View
                   </Link>
 
                   <Link
                     href={`/products/edit/${product.id}`}
-                    className="bg-[#FFDE4E] hover:bg-yellow-300 text-black px-6 py-2 rounded-lg font-semibold"
+                    className="bg-[#FFDE4E] hover:bg-yellow-300 text-black px-6 py-2 rounded-lg font-semibold cursor-pointer"
                   >
                     Edit
                   </Link>
 
                   <DeleteButton id={product.id} />
-
                 </div>
               </div>
             </div>
